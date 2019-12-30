@@ -43,6 +43,7 @@ class Sll():
             return
         temp = self.head
 
+        # if only node left
         if(self.len == 1):
             self.head = None
             self.tail = None

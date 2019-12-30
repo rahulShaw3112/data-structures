@@ -7,6 +7,7 @@ class Node():
 class Dll():
     def __init__(self): 
         self.head = None
+        self.tail = None
         self.len = 0
     
     def insert(self, value, index):
@@ -14,20 +15,31 @@ class Dll():
             print('Not possible')
             return
         newNode = Node(value)
-        #insert at first position
-        if(index == 0):
-            if(self.head):
-                self.head.prev = newNode
+        # insert with no node inserted.
+        if(not self.head):
+            self.head = newNode
+            self.tail = newNode
+
+        # #insert at first position
+        elif(index == 0):
+            self.head.prev = newNode
             newNode.next = self.head
             self.head = newNode
-        #insert in betweeen
+
+        # insert at last position
+        elif(index == self.len):
+            newNode.prev = self.tail
+            self.tail.next = newNode
+            self.tail = newNode
+        
+        # insert in between
         else:
             temp = self.traverseTill(index)
             newNode.next = temp.next
             newNode.prev = temp
-            if(not (index == self.len)):
-                temp.next.prev = newNode
+            temp.next.prev = newNode
             temp.next = newNode
+
         self.len += 1
         print('node inserted with value '+ str(newNode.value) + ' at index ' + str(index))
     
@@ -36,18 +48,31 @@ class Dll():
             print('Not possible')
             return
         temp = self.head
+
+        # if only node left
+        if(self.len == 1):
+            self.head = None
+            self.tail = None
+        
         #for first node
-        if(index == 0):
+        elif(index == 0):
             print('deleted node with value ' + str(self.head.value) + ' at index ' + str(index))
-            if(not self.len == 1):
-                self.head.next.prev = None
+            self.head.next.prev = None
             self.head = self.head.next
+        
+        # for the last node
+        elif(index == (self.len -1)):
+            temp = self.traverseTill(index)
+            temp.next = None
+            self.tail = temp
+
+        #for in between
         else:
-            #for in between
             temp = self.traverseTill(index)
             print('deleted node with value ' + str(temp.next.value) + ' at index ' + str(index))
             temp.next.next.prev = temp
             temp.next = temp.next.next
+
         self.len -= 1
     
     def traverseTill(self, index):
@@ -81,6 +106,10 @@ class Dll():
             print('\nhead: ' + str(self.head.value))
         else:
             print('\nhead: none')
+        if(self.tail):
+            print('tail: ' + str(self.tail.value))
+        else:
+            print('tail: none')
         print('length: ', self.len)
         print('####################\n')
 
@@ -105,8 +134,32 @@ if __name__=='__main__':
     ll.insert(20,1)
     ll.insert(30,2)
     ll.insert(40,3)
-    ll.delete(2)
-    ll.delete(1)
+    ll.insert(50,4)
+    ll.insert(60,5)
+    ll.print()
+    ll.reverse()
+
+    ll.delete(0)
+    ll.print()
+    ll.reverse()
+    
+    ll.delete(4)
+    ll.print()
+    ll.reverse()
+
     ll.delete(2)
     ll.print()
     ll.reverse()
+
+    ll.delete(0)
+    ll.print()
+    ll.reverse()
+    
+    ll.delete(0)
+    ll.print()
+    ll.reverse()
+
+    ll.delete(0)
+    ll.print()
+    ll.reverse()
+

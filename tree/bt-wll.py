@@ -137,3 +137,5 @@ if __name__ == "__main__":
     bt.insert(60)
     bt.insert(70)
     bt.printTree()
+    bt.delete(70)
+    bt.printTree()
